@@ -1,22 +1,39 @@
 const inp1 = document.querySelector("#naam");
 const inp2 = document.querySelector("#email");
 const inp3 = document.querySelector("#url");
-const btn= document.querySelector("button");
 const cardParent= document.querySelector(".user");
+const form = document.querySelector("form")
+const deleteBtn = document.querySelector(".deleteBtn")
 
 
-btn.addEventListener("submit",function(e){
+form.addEventListener("submit",function(e){
     e.preventDefault();
+let name = inp1.value;
+let email = inp2.value;
+let imageUrl = inp3.value;
+if(name.trim() ==="" && email.trim()===""&& imageUrl.trim() === ""){
+    alert("Fill your information first");
+return;
+}
+cardParent.innerHTML += `
+<div class="user_card">
+<div class="deleteBtn"><h3>x</h3></div>
+<div class="user_img">
+<img src="${imageUrl}" alt="no image">
 
+</div>
+<div class="user_info">
+<h3 class="user_name"> Name : ${name} </h3>
+<p class="user_email">Email : ${email} </p>
+</div>
+</div>`
+form.reset();
 })
 
-cardParent.innerHTML += `<div class="user_card">
-        <div class="user_img">
-            <img src="${inp3.value}" alt="no image">
+cardParent.addEventListener("click",function(elem){
 
-        </div>
-        <div class="user_info">
-            <h3 class="user_name"> ${inp1.value} </h3>
-            <p class="user_email">${inp2.value} </p>
-        </div>
-    </div>`
+if(elem.target.textContent === "x"){
+    elem.target.closest(".user_card").remove();
+}
+
+})
